@@ -17,9 +17,15 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::post('login', function () {
-    return response()->json([
-        'data' => true,
-        'message' => 'Test login',
-    ]);
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
+	Route::post('login', 'AuthController@login');
+
+	Route::middleware('auth:api')->group(function () {
+		Route::post('logout', 'AuthController@logout');
+	});
 });
+
+// Route::post('/v1/login', 'Api\V1\AuthController@login');
+// Route::get('/v1/login', function () {
+// 	dd(1234);
+// });

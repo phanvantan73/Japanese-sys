@@ -34,4 +34,16 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    'passport' => [
+        'password_grant_type' => env('PASSPORT_GRANT_TYPE', 'password'),
+        'refresh_token_grant_type' => env('PASSPORT_REFRESH_TOKEN_GRANT_TYPE', 'refresh_token'),
+        'client_id' => env('PASSPORT_CLIENT_ID', '1'),
+        'client_secret' => env('PASSPORT_CLIENT_SECRET', ''),
+        'url_request_token' => env('PASSPORT_URL', 'localhost') . '/oauth/token',
+        'url' => env('PASSPORT_URL', 'localhost'),
+        'scheme' => env('PASSPORT_URL_SCHEME', 'http'),
+        'access_token_expires' => env('PASSPORT_ACCESS_TOKEN_EXPIRES', 15),
+        'refresh_token_expires' => env('PASSPORT_REFRESH_TOKEN_EXPIRES', 30),
+    ],
+
 ];
