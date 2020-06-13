@@ -11,6 +11,7 @@ use App\Exceptions\ApiException;
 use App\Services\Api\AuthService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -56,6 +57,18 @@ class AuthController extends Controller
             'data' => [
                 'status' => true,
                 'message' => __('logout_successful'),
+            ],
+        ]);
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        $this->authService->register($request->all());
+
+        return response()->json([
+            'data' => [
+                'status' => true,
+                'message' => __('register_successful'),
             ],
         ]);
     }
