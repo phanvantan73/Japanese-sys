@@ -4,6 +4,7 @@ namespace App\Services\Api;
 
 use App;
 use Request;
+use App\Models\User;
 use Lcobucci\JWT\Parser;
 use Laravel\Passport\Token;
 use App\Exceptions\ApiException;
@@ -107,5 +108,23 @@ class AuthService extends BaseService
             'refresh_token' => $refreshToken,
             'scope' => $scope,
         ];
+    }
+
+    /**
+     * Register new user.
+     *
+     * @param array $inputs
+     *
+     * @return void
+     */
+    public function register(array $inputs)
+    {
+        try {
+            User::create(array_merge($inputs, [
+                'name' => 'User',
+            ]));
+        } catch (Exception $e) {
+            throw new ApiException('register_error');
+        }
     }
 }
