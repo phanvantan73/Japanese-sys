@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'data' => [
                     'status' => true,
                     'message' => __('login_successful'),
-                    'access_token' => $token,
+                    'access_token' => $result->access_token,
                 ],
             ]);
         } catch (Exception $e) {
