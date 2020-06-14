@@ -3,7 +3,6 @@
 namespace App\Services\Admin;
 
 use Auth;
-use App\Models\User;
 
 /**
  * Service class for authentication handling
