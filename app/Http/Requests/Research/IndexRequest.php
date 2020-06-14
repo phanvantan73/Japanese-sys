@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Research;
 
-use App\Http\Requests\BaseRequest;
+use App\Http\Requests\BaseApiRequest;
 
-class IndexRequest extends BaseRequest
+class IndexRequest extends BaseApiRequest
 {
     /**
      * Get the validation rules that apply to the request.

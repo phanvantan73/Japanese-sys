@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-abstract class BaseRequest extends FormRequest
+abstract class BaseApiRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

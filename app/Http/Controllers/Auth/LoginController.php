@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
+use App\Services\Admin\AuthService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -18,22 +21,39 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+    protected $service;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AuthService $service)
     {
         $this->middleware('guest')->except('logout');
+        $this->service = $service;
+    }
+
+    public function getLogin()
+    {
+        return view('vendor.adminlte.login');
+    }
+
+    public function postLogin(LoginRequest $request)
+    {
+        $result = $this->service->login($request->all());
+
+        if ($result) {
+            return redirect()->route('dashboard');
+        } else {
+            return redirect()->route('get_login')->withErrors(['login_fail' => 'Login failed, try again!']);
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('get_login');
     }
 }
