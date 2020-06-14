@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Storage;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'birthday',
+        'address',
+        'phone',
     ];
 
     /**
@@ -60,5 +65,14 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getAvatarAttribute()
+    {
+        if (strpos($this->attributes['avatar'], 'http') === false) {
+            return Storage::url($this->attributes['avatar']);
+        }
+
+        return $this->attributes['avatar'];
     }
 }
