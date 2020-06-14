@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Http\Requests\BaseRequest;
+use App\Http\Requests\BaseApiRequest;
 
-class LoginRequest extends BaseRequest
+class LoginRequest extends BaseApiRequest
 {
     /**
      * Get the validation rules that apply to the request.
