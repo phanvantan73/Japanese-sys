@@ -49,6 +49,13 @@ class LessonService extends BaseService
     public function delete($id)
     {
         $lesson = Lesson::findOrFail($id);
+        $lesson->questions()->delete();
+        $lesson->resource()->delete();
         $lesson->delete();
+    }
+
+    public function getLessonNamesAndIds()
+    {
+        return Lesson::all()->pluck('name', 'id')->toArray();
     }
 }

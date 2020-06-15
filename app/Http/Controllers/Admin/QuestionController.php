@@ -4,9 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Admin\LessonService;
+use App\Services\Admin\QuestionService;
+use App\Http\Requests\Admin\Question\StoreRequest;
+use App\Http\Requests\Admin\Question\UpdateRequest;
 
 class QuestionController extends Controller
 {
+    protected $service;
+    protected $lessonService;
+
+    public function __construct(QuestionService $service, LessonService $lessonService)
+    {
+        $this->service = $service;
+        $this->lessonService = $lessonService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +26,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = $this->service->getList();
+
+        return view('questions.index', compact('questions'));
     }
 
     /**
@@ -24,7 +38,10 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        $lessons = $this->lessonService->getLessonNamesAndIds();
+        $questionTypes = config('data.questions_types');
+
+        return view('questions.create', compact('lessons', 'questionTypes'));
     }
 
     /**
@@ -33,9 +50,17 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->all();
+
+        if ($request->has('image')) {
+            $path = $request->file('image')->store('public/questions');
+            $data['image'] = $path;
+        }
+        $this->service->store($data);
+
+        return redirect()->route('questions.index');
     }
 
     /**
@@ -57,7 +82,11 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = $this->service->getQuestion($id);
+        $lessons = $this->lessonService->getLessonNamesAndIds();
+        $questionTypes = config('data.questions_types');
+
+        return view('questions.edit', compact('question', 'lessons', 'questionTypes'));
     }
 
     /**
@@ -67,9 +96,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $this->service->update($request->all(), $id);
+
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +111,8 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->delete($id);
+        
+        return redirect()->back();
     }
 }
