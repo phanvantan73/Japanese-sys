@@ -18,4 +18,12 @@ class Course extends Model
     {
     	return $this->hasMany(Lesson::class);
     }
+
+    /**
+     * Get the post's image.
+     */
+    public function resource()
+    {
+        return $this->morphOne(Resource::class, 'resourceable');
+    }
 }
