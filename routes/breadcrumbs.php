@@ -55,3 +55,20 @@ Breadcrumbs::for('lessons.edit', function ($trail, $lesson) {
     $trail->parent('lessons');
     $trail->push('Chỉnh sửa', route('lessons.edit', $lesson->id));
 });
+
+// Questions
+Breadcrumbs::for('questions', function ($trail) {
+    $trail->push('Quản lý câu hỏi', route('questions.index'));
+});
+
+// Questions > Create
+Breadcrumbs::for('questions.create', function ($trail) {
+    $trail->parent('questions');
+    $trail->push('Thêm mới', route('questions.create'));
+});
+
+// Questions > Edit
+Breadcrumbs::for('questions.edit', function ($trail, $question) {
+    $trail->parent('questions');
+    $trail->push('Chỉnh sửa', route('questions.edit', $question->id));
+});
