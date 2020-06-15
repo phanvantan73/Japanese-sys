@@ -21,3 +21,20 @@ Breadcrumbs::for('users.edit', function ($trail, $user) {
 	$trail->parent('users');
     $trail->push('Chỉnh sửa', route('users.edit', $user->id));
 });
+
+// Courses
+Breadcrumbs::for('courses', function ($trail) {
+    $trail->push('Quản lý khóa học', route('courses.index'));
+});
+
+// Courses > Create
+Breadcrumbs::for('courses.create', function ($trail) {
+	$trail->parent('courses');
+    $trail->push('Thêm mới', route('courses.create'));
+});
+
+// Courses > Edit
+Breadcrumbs::for('courses.edit', function ($trail, $course) {
+	$trail->parent('courses');
+    $trail->push('Chỉnh sửa', route('courses.edit', $course->id));
+});

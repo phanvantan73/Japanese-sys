@@ -136,7 +136,7 @@ return [
         [
             'text'        => 'Dashboard',
             'url'         => 'admin/dashboard',
-            'icon'        => 'fas fa-fw fa-file',
+            'icon'        => 'fa fa-fw fa-desktop',
             'label'       => 4,
             'label_color' => 'success',
         ],
@@ -147,23 +147,23 @@ return [
         ],
         [
             'text' => 'Quản lý khóa học',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'url'  => 'admin/courses',
+            'icon' => 'fas fa-fw fa-file',
         ],
         [
             'text' => 'Quản lý bài học',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'url'  => 'admin/lessons',
+            'icon' => 'fas fa-fw fa-book',
         ],
         [
             'text' => 'Quản lý câu hỏi',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'url'  => 'admin/questions',
+            'icon' => 'fas fa-fw fa-question',
         ],
         [
             'text' => 'Quản lý từ vựng',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'url'  => 'admin/vocabularies',
+            'icon' => 'fas fa-fw fa-file-word',
         ],
         ['header' => 'account_settings'],
         [
