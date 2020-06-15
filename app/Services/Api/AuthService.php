@@ -5,6 +5,7 @@ namespace App\Services\Api;
 use App;
 use Request;
 use App\Models\User;
+use App\Models\Role;
 use Lcobucci\JWT\Parser;
 use Laravel\Passport\Token;
 use App\Exceptions\ApiException;
@@ -120,9 +121,11 @@ class AuthService extends BaseService
     public function register(array $inputs)
     {
         try {
-            User::create(array_merge($inputs, [
+            $user = User::create(array_merge($inputs, [
                 'name' => 'User',
             ]));
+            $role = Role::where('name', 'LIKE', Role::USER)->first();
+            $user->roles()->attach($role);
         } catch (Exception $e) {
             throw new ApiException('register_error');
         }

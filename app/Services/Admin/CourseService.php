@@ -49,6 +49,13 @@ class CourseService extends BaseService
     public function delete($id)
     {
     	$course = Course::findOrFail($id);
+        $course->lessons()->delete();
+        $course->resource()->delete();
     	$course->delete();
+    }
+
+    public function getCourseNamesAndIds()
+    {
+        return Course::all()->pluck('name', 'id')->toArray();
     }
 }

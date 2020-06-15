@@ -38,3 +38,20 @@ Breadcrumbs::for('courses.edit', function ($trail, $course) {
 	$trail->parent('courses');
     $trail->push('Chỉnh sửa', route('courses.edit', $course->id));
 });
+
+// Lessons
+Breadcrumbs::for('lessons', function ($trail) {
+    $trail->push('Quản lý bài học', route('lessons.index'));
+});
+
+// Lessons > Create
+Breadcrumbs::for('lessons.create', function ($trail) {
+    $trail->parent('lessons');
+    $trail->push('Thêm mới', route('lessons.create'));
+});
+
+// Lessons > Edit
+Breadcrumbs::for('lessons.edit', function ($trail, $lesson) {
+    $trail->parent('lessons');
+    $trail->push('Chỉnh sửa', route('lessons.edit', $lesson->id));
+});
