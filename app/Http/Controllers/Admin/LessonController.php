@@ -4,9 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Admin\LessonService;
+use App\Services\Admin\CourseService;
+use App\Http\Requests\Admin\Lesson\StoreRequest;
+use App\Http\Requests\Admin\Lesson\UpdateRequest;
 
 class LessonController extends Controller
 {
+    protected $service;
+    protected $courseService;
+
+    public function __construct(LessonService $service, CourseService $courseService)
+    {
+        $this->service = $service;
+        $this->courseService = $courseService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class LessonController extends Controller
      */
     public function index()
     {
-        //
+        $lessons = $this->service->getList();
+
+        return view('lessons.index', compact('lessons'));
     }
 
     /**
@@ -24,7 +39,9 @@ class LessonController extends Controller
      */
     public function create()
     {
-        //
+        $courses = $this->courseService->getCourseNamesAndIds();
+
+        return view('lessons.create', compact('courses'));
     }
 
     /**
@@ -33,9 +50,17 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->all();
+
+        if ($request->has('image')) {
+            $path = $request->file('image')->store('public/lessons');
+            $data['image'] = $path;
+        }
+        $this->service->store($data);
+
+        return redirect()->route('lessons.index');
     }
 
     /**
@@ -57,7 +82,10 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
-        //
+        $courses = $this->courseService->getCourseNamesAndIds();
+        $lesson = $this->service->getLesson($id);
+
+        return view('lessons.edit', compact('lesson', 'courses'));
     }
 
     /**
@@ -67,9 +95,11 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $this->service->update($request->all(), $id);
+
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +110,8 @@ class LessonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->delete($id);
+
+        return redirect()->back();
     }
 }

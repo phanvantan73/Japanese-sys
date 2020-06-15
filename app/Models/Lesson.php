@@ -30,4 +30,12 @@ class Lesson extends Model
     {
     	return $this->hasMany(Vocabulary::class);
     }
+
+    /**
+     * Get the post's image.
+     */
+    public function resource()
+    {
+        return $this->morphOne(Resource::class, 'resourceable');
+    }
 }
