@@ -19,8 +19,8 @@ class CourseService extends BaseService
     {
         DB::beginTransaction();
 
-    	try {
-    		$course = Course::create($inputs);
+        try {
+            $course = Course::create($inputs);
 
             if (isset($inputs['image'])) {
                 $course->resource()->create([
@@ -29,29 +29,29 @@ class CourseService extends BaseService
             }
 
             DB::commit();
-    	} catch (Exception $e) {
+        } catch (Exception $e) {
             DB::rollback();
-    		report($e);
-    	}
+            report($e);
+        }
     }
 
     public function getCourse($id)
     {
-    	return Course::findOrFail($id);
+        return Course::findOrFail($id);
     }
 
     public function update(array $inputs, $id)
     {
-    	$course = Course::findOrFail($id);
-    	$course->update($inputs);
+        $course = Course::findOrFail($id);
+        $course->update($inputs);
     }
 
     public function delete($id)
     {
-    	$course = Course::findOrFail($id);
+        $course = Course::findOrFail($id);
         $course->lessons()->delete();
         $course->resource()->delete();
-    	$course->delete();
+        $course->delete();
     }
 
     public function getCourseNamesAndIds()
