@@ -34,6 +34,7 @@ class AlphabetsTableSeeder extends Seeder
                     $alphabet = Alphabet::firstOrCreate([
                         'content' => Arr::first(explode('.', $fileName)),
                         'type' => 1,
+                        'image' => str_replace('storage', 'public', Storage::url('public/alphabets/hiragana/' . $fileName)),
                     ]);
                     $alphabet->detail()->create([
                         'description' => str_replace('storage', 'public', Storage::url('public/alphabets/hiragana/detail/' . $fileName)),
@@ -44,6 +45,7 @@ class AlphabetsTableSeeder extends Seeder
                         [
                             'content' => Arr::first(explode('.', $fileName)),
                             'type' => 1,
+                            'image' => str_replace('storage', 'public', Storage::url('public/alphabets/hiragana/' . $fileName)),
                         ]
                     );
                 }
@@ -51,6 +53,7 @@ class AlphabetsTableSeeder extends Seeder
 
             DB::commit();
         } catch (\Exception $e) {
+            \Log::info($e->getMessage());
             DB::rollback();
         }
     }
