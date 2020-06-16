@@ -22,4 +22,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
 	});
 
 	Route::get('research', 'ResearchController@research');
+	Route::get('courses/{course}', 'CourseController@getLists');
 });
