@@ -10,25 +10,25 @@ class Lesson extends Model
     use SoftDeletes;
 
     protected $fillable = [
-    	'name',
-    	'description',
-    	'course_id',
-    	'content',
+        'name',
+        'description',
+        'course_id',
+        'content',
     ];
 
     public function course()
     {
-    	return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function grammars()
     {
-    	return $this->hasMany(Grammar::class);
+        return $this->hasMany(Grammar::class);
     }
 
     public function vocabularies()
     {
-    	return $this->hasMany(Vocabulary::class);
+        return $this->hasMany(Vocabulary::class);
     }
 
     /**
