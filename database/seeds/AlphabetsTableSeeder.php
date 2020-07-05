@@ -50,9 +50,8 @@ class AlphabetsTableSeeder extends Seeder
                     );
                 }
             }
-            
-            $html1 = file_get_html('https://www.thoughtco.com/how-to-pronounce-hiragana-japanese-hiragana-with-audio-files-4077351');
 
+            $html1 = file_get_html('https://www.thoughtco.com/how-to-pronounce-hiragana-japanese-hiragana-with-audio-files-4077351');
             foreach ($html1->find('tr') as $key => $value) {
                 foreach ($value->find('a') as $k => $v) {
                     $fileName = Arr::last(explode('/', $v->href));
