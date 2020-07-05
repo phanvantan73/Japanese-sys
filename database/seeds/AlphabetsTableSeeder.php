@@ -50,6 +50,20 @@ class AlphabetsTableSeeder extends Seeder
                     );
                 }
             }
+            
+            $html1 = file_get_html('https://www.thoughtco.com/how-to-pronounce-hiragana-japanese-hiragana-with-audio-files-4077351');
+
+            foreach ($html1->find('tr') as $key => $value) {
+                foreach ($value->find('a') as $k => $v) {
+                    $fileName = Arr::last(explode('/', $v->href));
+                    $audio = file_get_contents($v->href);
+                    Storage::put('public/alphabets/hiragana/' . $fileName, $audio);
+                    $let = Arr::first(explode('.', $fileName));
+                    Alphabet::where('content', $let)->update([
+                        'audio' => 'public/alphabets/hiragana/' . $fileName,
+                    ]);
+                }
+            }
 
             DB::commit();
         } catch (\Exception $e) {

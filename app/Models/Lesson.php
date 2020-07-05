@@ -31,6 +31,11 @@ class Lesson extends Model
         return $this->hasMany(Vocabulary::class);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
     /**
      * Get the post's image.
      */

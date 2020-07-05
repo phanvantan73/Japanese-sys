@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use DB;
+use App\Models\Answer;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
+use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Services\Api\LessonService;
 
@@ -80,5 +84,48 @@ class LessonController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function saveTest(Request $request)
+    {
+        $user = $request->user('api');
+        $lesson = Lesson::findOrFail($request->lesson_id);
+        $questionIds = $lesson->questions->pluck('id')->toArray();
+        $score = Answer::whereIn('id', collect($request->answers)
+            ->pluck('answer_id'))
+            ->where('is_true', 1)
+            ->count();
+        DB::beginTransaction();
+
+        try {
+            $test = $user->tests()->create();
+            $test->questions()->sync(array_values($questionIds));
+            $test->result()->create([
+                'log' => json_encode($request->answers),
+                'score' => $score,
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new ApiException('Nộp bài thất bại');
+        }
+
+        return response()->json([
+            'data' => [
+                'success' => 'true',
+            ],
+        ]);
+    }
+
+    public function getListTest(Request $request)
+    {
+        $tests = $request->user('api')->tests()->with('result')->get();
+
+        return response()->json([
+            'data' => [
+                'tests' => $tests,
+            ],
+        ]);
     }
 }

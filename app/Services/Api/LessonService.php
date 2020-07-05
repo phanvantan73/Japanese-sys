@@ -18,6 +18,6 @@ class LessonService extends BaseService
 
     public function getLesson($id)
     {
-        return Lesson::with('resource')->findOrFail($id);
+        return Lesson::with(['resource', 'questions.answers'])->findOrFail($id);
     }
 }

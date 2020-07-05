@@ -14,14 +14,16 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function () {
-	Route::post('login', 'AuthController@login');
-	Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('register', 'AuthController@register');
 
-	Route::middleware('auth:api')->group(function () {
-		Route::post('logout', 'AuthController@logout');
-	});
+    Route::middleware('auth:api')->group(function () {
+        Route::post('logout', 'AuthController@logout');
+        Route::post('save-test', 'LessonController@saveTest');
+        Route::get('list-test', 'LessonController@getListTest');
+    });
 
-	Route::get('research', 'ResearchController@research');
-	Route::get('courses/{course}', 'CourseController@getLists');
-	Route::apiResource('lessons', 'LessonController');
+    Route::get('research', 'ResearchController@research');
+    Route::get('courses/{course}', 'CourseController@getLists');
+    Route::apiResource('lessons', 'LessonController');
 });

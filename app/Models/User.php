@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(Ranking::class);
     }
 
+    public function tests()
+    {
+        return $this->hasMany(Test::class);
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
