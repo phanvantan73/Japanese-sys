@@ -11,8 +11,10 @@ use App\Services\Api\BaseService;
  */
 class CourseService extends BaseService
 {
-    public function getList()
+    public function getList(string $course)
     {
-        return Alphabet::with('detail:id,alphabet_id,description')->where('type', 1)->get();
+        $type = $course === 'hiragana' ? 1 : 2;
+
+        return Alphabet::with('detail:id,alphabet_id,description')->where('type', $type)->get();
     }
 }

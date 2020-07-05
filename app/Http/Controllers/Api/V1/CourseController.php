@@ -17,7 +17,7 @@ class CourseController extends Controller
 
     public function getLists(string $course)
     {
-        $lessons = $this->service->getList();
+        $lessons = $this->service->getList($course);
 
         return response()->json([
             'data' => [
